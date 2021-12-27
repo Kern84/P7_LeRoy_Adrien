@@ -1,6 +1,6 @@
 import time
 
-# from data.donnees_bruteforce import dict_bruteforce
+# Algorithme 2**n
 
 start = time.process_time()
 
@@ -98,13 +98,7 @@ def force_brute(maximum_expense, elements, elements_selection=[]):
 def main():
     two_years_profit()
     create_tuple()
-    # max = maximum_expense_per_client()
-    # maximum_expense = 500
-    # n = len(list_cost)
-    print(list_of_tuples)
-    print()
     print("meilleur solution : ", force_brute(500, list_of_tuples))
-    # print(test(maximum_expense, list_cost, list_two_years_profit, n))
 
 
 if __name__ == "__main__":

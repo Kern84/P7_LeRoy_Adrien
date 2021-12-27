@@ -21,18 +21,6 @@ dict_bruteforce = {
     "action-20": {"cost": 114, "profit": 18},
 }
 
-
-def two_years_profit():
-    """Calcul le profit de chaque action au bout de deux ans."""
-    for key, value in dict_bruteforce.items():
-        two_years_profit = value["cost"] * value["profit"] / 100
-        dict_bruteforce[key]["two_years_profit"] = two_years_profit
-    # print(dict_bruteforce)
-
-
-two_years_profit()
-
-
 list_action = [
     "action-1",
     "action-2",
@@ -80,17 +68,3 @@ list_cost = [
 ]
 
 list_profit = [5, 10, 15, 20, 17, 25, 7, 11, 13, 27, 17, 9, 23, 1, 3, 8, 12, 14, 21, 18]
-
-list_profit_two_years = []
-
-
-def profit_two_years():
-    for i in range(len(list_action)):
-        profit = list_cost[i] * list_profit[i] / 100
-        list_profit_two_years.append(profit)
-
-
-profit_two_years()
-
-# print(len(list_action), len(list_cost), len(list_profit), len(list_profit_two_years))
-# print(list_profit_two_years)
