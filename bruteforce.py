@@ -1,5 +1,6 @@
 import time
-from data.donnees_bruteforce import dict_bruteforce
+
+# from data.donnees_bruteforce import dict_bruteforce
 
 start = time.process_time()
 
@@ -51,67 +52,59 @@ list_cost = [
 
 list_profit = [5, 10, 15, 20, 17, 25, 7, 11, 13, 27, 17, 9, 23, 1, 3, 8, 12, 14, 21, 18]
 
-list_profit_two_years = []
+list_two_years_profit = []
 
-
-def profit_two_years():
-    for i in range(len(list_action)):
-        profit = list_cost[i] * list_profit[i] / 100
-        list_profit_two_years.append(profit)
+list_of_tuples = []
 
 
 def two_years_profit():
-    """Calcul le profit de chaque action au bout de deux ans."""
-    action_profit = {}
-    for key, value in dict_bruteforce.items():
-        two_years_profit = value["cost"] * value["profit"] / 100
-        print(key, " : ", two_years_profit, "€")
-        action_profit[key] = two_years_profit
-    print(action_profit)
+    for i in range(len(list_action)):
+        profit = list_cost[i] * list_profit[i] / 100
+        list_two_years_profit.append(profit)
 
 
-def maximum_expense_per_client():
-    cost_list = []
-    max_expense = 0
-    for key, value in dict_bruteforce.items():
-        if max_expense <= 500:
-            cost_list.append(value["cost"])
-            max_expense += value["cost"]
-        if max_expense > 500:
-            adjust = cost_list.pop()
-            max_expense -= adjust
-            break
-    print(cost_list)
-    print(max_expense)
+def create_tuple():
+    for i in range(len(list_action)):
+        prep_tuple = (
+            list_action[i],
+            list_cost[i],
+            list_profit[i],
+            list_two_years_profit[i],
+        )
+        list_of_tuples.append(prep_tuple)
 
 
-def test(maximum_expense, list_cost, list_profit_two_years, n):
-    if n == 0 or maximum_expense == 0:
-        return 0
-
-    if list_cost[n - 1] > maximum_expense:
-        return test(maximum_expense, list_cost, list_profit_two_years, n - 1)
-
+def force_brute(maximum_expense, elements, elements_selection=[]):
+    if elements:
+        val1, lstVal1, lstVal1_1 = force_brute(
+            maximum_expense, elements[1:], elements_selection
+        )
+        val = elements[0]
+        if val[1] <= maximum_expense:
+            val2, lstVal2, lstVal2_2 = force_brute(
+                maximum_expense - val[1], elements[1:], elements_selection + [val]
+            )
+            if val1 < val2:
+                return val2, lstVal2, lstVal2_2
+        return val1, lstVal1, lstVal1_1
     else:
-        return max(
-            list_profit_two_years[n - 1]
-            + test(
-                maximum_expense - list_cost[n - 1],
-                list_cost,
-                list_profit_two_years,
-                n - 1,
-            ),
-            test(maximum_expense, list_cost, list_profit_two_years, n - 1),
+        return (
+            sum([i[1] for i in elements_selection]),
+            sum([i[3] for i in elements_selection]),
+            elements_selection,
         )
 
 
 def main():
-    # profit = two_years_profit()
-    profit_two_years()
+    two_years_profit()
+    create_tuple()
     # max = maximum_expense_per_client()
-    maximum_expense = 500
-    n = len(list_cost)
-    print(test(maximum_expense, list_cost, list_profit_two_years, n))
+    # maximum_expense = 500
+    # n = len(list_cost)
+    print(list_of_tuples)
+    print()
+    print("meilleur solution : ", force_brute(500, list_of_tuples))
+    # print(test(maximum_expense, list_cost, list_two_years_profit, n))
 
 
 if __name__ == "__main__":
