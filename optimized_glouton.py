@@ -3,7 +3,7 @@ import time
 
 start = time.process_time()
 
-list_of_tuples = []
+action = []
 cost = []
 value = []
 
@@ -16,10 +16,9 @@ with open("data/dataset1_Python+P7.csv", "r", newline="") as csvfile:
     next(actions_info)
     for row in actions_info:
         profit = float(row[1]) * float(row[2]) / 100
-        create_tuple = row[0], float(row[1]), float(row[2]), float(round(profit, 2))
+        action.append(row[0])
         cost.append(float(row[1]))
-        value.append(profit)
-        list_of_tuples.append(create_tuple)
+        value.append(round(profit, 2))
 
 
 class Glouton:
@@ -29,11 +28,12 @@ class Glouton:
     systematically giving the best partial solution.
     """
 
-    def __init__(self, cost, profit, index):
+    def __init__(self, name, cost, profit, index):
+        self.name = name
         self.index = index
         self.cost = cost
         self.profit = profit
-        self.ratio = profit / cost
+        self.ratio = profit // cost
 
     """
     Function for the comparison between two "Glouton".
@@ -44,42 +44,43 @@ class Glouton:
         return self.ratio < other.ratio
 
 
-def get_best_value(cost, value, maximum_expense):
+def get_best_value(action, cost, value, maximum_expense):
     """
     Add best action ratio to the list.
-    Ignore the 0$ action.
+    Ignore the 0$ and negative number actions.
     Sort elements by ratio.
     Check if action can be bought and if so withdraw the cost from max expense.
     Add the profit and the action taken to the list.
-
     """
     sorting_table = []
+    list_of_actions_taken = []
     for i in range(len(cost)):
-        try:
-            sorting_table.append(Glouton(float(cost[i]), float(value[i]), i))
-        except ZeroDivisionError:
+        if float(cost[i]) <= 0 or float(value[i]) <= 0:
             pass
+        else:
+            sorting_table.append(Glouton(action[i], float(cost[i]), float(value[i]), i))
 
     sorting_table.sort(reverse=True)
 
-    list_of_actions_taken = []
     cost_counter = 0
     value_counter = 0
     for objet in sorting_table:
+        current_name = objet.name
         current_cost = float(objet.cost)
         current_value = float(objet.profit)
         if maximum_expense - current_cost >= 0:
             maximum_expense -= current_cost
             value_counter += current_value
             cost_counter += current_cost
-            list_of_actions_taken.append(list_of_tuples[i])
+            action_taken = current_name, current_cost, current_value
+            list_of_actions_taken.append(action_taken)
     return "\nTotal return : {} $; \nTotal cost : {} $;\nList of actions taken : {}.".format(
         round(value_counter, 2), round(cost_counter, 2), list_of_actions_taken
     )
 
 
 print()
-print("Best solution : ", get_best_value(cost, value, maximum_expense))
+print("Best solution : ", get_best_value(action, cost, value, maximum_expense))
 
 
 end = time.process_time()
