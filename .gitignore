@@ -1,8 +1,7 @@
 env/
 .vscode
 .DS_Store
-test.py
-essai.py
+test*.py
 
 
 

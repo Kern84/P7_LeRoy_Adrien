@@ -11,9 +11,14 @@ with open("data/dataset1_Python+P7.csv", "r", newline="") as csvfile:
     next(actions_info)
     for row in actions_info:
         profit = float(row[1]) * float(row[2]) / 100
-        create_tuple = row[0], float(row[1]), float(row[2]), float(round(profit, 6))
+        # create_tuple = row[0], float(row[1]), float(row[2]), int(round(profit, 2) * 100)
+        create_tuple = (
+            row[0],
+            int(round(float(row[1]), 2) * 100),
+            float(row[2]),
+            int(round(profit, 2) * 100),
+        )
         list_of_tuples.append(create_tuple)
-
 
 # print(list_of_tuples)
 
@@ -37,7 +42,7 @@ def optimized(maximum_expense, elements):
     n = len(elements)
     elements_selection = []
 
-    while m <= 0 and n >= 0:
+    while m >= 0 and n >= 0:
         e = elements[n - 1]
         if matrice[n][m] == matrice[n - 1][m - e[1]] + e[3]:
             elements_selection.append(e)
@@ -56,4 +61,4 @@ if __name__ == "__main__":
     main()
 
 end = time.process_time()
-print("Time to execute program : ", end - start, "Seconds")
+print("Program executed in : ", end - start, "Seconds")

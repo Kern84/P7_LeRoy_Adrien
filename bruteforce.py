@@ -58,12 +58,14 @@ list_of_tuples = []
 
 
 def two_years_profit():
+    """Calculate the return after two years in dollars for each actions."""
     for i in range(len(list_action)):
         profit = list_cost[i] * list_profit[i] / 100
         list_two_years_profit.append(profit)
 
 
 def create_tuple():
+    """Create a tuple with the actions : names, prices, returns in % and returns in $."""
     for i in range(len(list_action)):
         prep_tuple = (
             list_action[i],
@@ -74,14 +76,21 @@ def create_tuple():
         list_of_tuples.append(prep_tuple)
 
 
-def force_brute(maximum_expense, elements, elements_selection=[]):
+def brute_force(maximum_expense, elements, elements_selection=[]):
+    """
+    Breakpoint if no more elements. Return the actions total cost, total profit and the actions taken.
+    While there are still elements. First ligne ignore the first element and do not add elements to the list.
+    Check if first element is in range of the max expense. If so, withdraw the price from max expense, remove the first
+    element from the list and add it to the selected elements.
+    check the best solution, with or without the action.
+    """
     if elements:
-        val1, lstVal1, lstVal1_1 = force_brute(
+        val1, lstVal1, lstVal1_1 = brute_force(
             maximum_expense, elements[1:], elements_selection
         )
         val = elements[0]
         if val[1] <= maximum_expense:
-            val2, lstVal2, lstVal2_2 = force_brute(
+            val2, lstVal2, lstVal2_2 = brute_force(
                 maximum_expense - val[1], elements[1:], elements_selection + [val]
             )
             if val1 < val2:
@@ -98,11 +107,11 @@ def force_brute(maximum_expense, elements, elements_selection=[]):
 def main():
     two_years_profit()
     create_tuple()
-    print("meilleur solution : ", force_brute(500, list_of_tuples))
+    print("Best solution : ", brute_force(500, list_of_tuples))
 
 
 if __name__ == "__main__":
     main()
 
 end = time.process_time()
-print("Time to execute program : ", end - start, "Seconds")
+print("Program executed in : ", end - start, "Seconds")
