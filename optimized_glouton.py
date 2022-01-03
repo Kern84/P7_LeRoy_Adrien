@@ -10,15 +10,21 @@ value = []
 maximum_expense = 500
 
 
-"""Retrieves information from .csv file and sorts them in lists."""
+"""
+Retrieves information from .csv file and sorts them in lists.
+Ignore actions price and two years profit if <= 0 $.
+"""
 with open("data/dataset1_Python+P7.csv", "r", newline="") as csvfile:
     actions_info = csv.reader(csvfile)
     next(actions_info)
     for row in actions_info:
         profit = float(row[1]) * float(row[2]) / 100
-        action.append(row[0])
-        cost.append(float(row[1]))
-        value.append(round(profit, 2))
+        if float(row[1]) <= 0 or profit <= 0:
+            pass
+        else:
+            action.append(row[0])
+            cost.append(float(row[1]))
+            value.append(round(profit, 2))
 
 
 class Glouton:
