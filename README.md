@@ -37,7 +37,7 @@ Program executed in :  7.143435 Seconds
 
 
 Optimized Glouton:
-The optimized_dglouton.py file shows an optimized greedy code. It read a file (~1000 elements) with actions information and determine the best combinations for the best return over two years for a maximum spend of $ 500.
+The optimized_glouton.py file shows an optimized greedy code. It read a file (~1000 elements) with actions information and determine the best combinations for the best return over two years for a maximum spend of $ 500.
 
 Best solution for dataset 1:  
 Total return : 101.86 $; 
