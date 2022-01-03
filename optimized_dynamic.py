@@ -74,38 +74,44 @@ def create_tuple():
         list_of_tuples.append(prep_tuple)
 
 
-def brute_force(maximum_expense, elements, elements_selection=[]):
-    """
-    Breakpoint if no more elements. Return the actions total cost, total profit and the actions taken.
-    While there are still elements. First ligne ignore the first element and do not add elements to the list.
-    Check if first element is in range of the max expense. If so, withdraw the price from max expense, remove the first
-    element from the list and add it to the selected elements.
-    check the best solution, with or without the action.
-    """
-    if elements:
-        val1, lstVal1, lstVal1_1 = brute_force(
-            maximum_expense, elements[1:], elements_selection
-        )
-        val = elements[0]
-        if val[1] <= maximum_expense:
-            val2, lstVal2, lstVal2_2 = brute_force(
-                maximum_expense - val[1], elements[1:], elements_selection + [val]
-            )
-            if val1 < val2:
-                return val2, lstVal2, lstVal2_2
-        return val1, lstVal1, lstVal1_1
-    else:
-        return (
-            sum([i[1] for i in elements_selection]),
-            sum([i[3] for i in elements_selection]),
-            elements_selection,
-        )
+def optimized_dynamic(maximum_expense, elements):
+    matrice = [
+        [0 for x in range(maximum_expense + 1)] for x in range(len(elements) + 1)
+    ]
+
+    for i in range(1, len(elements) + 1):
+        for w in range(1, maximum_expense + 1):
+            if elements[i - 1][1] <= w:
+                matrice[i][w] = max(
+                    elements[i - 1][3] + matrice[i - 1][w - elements[i - 1][1]],
+                    matrice[i - 1][w],
+                )
+            else:
+                matrice[i][w] = matrice[i - 1][w]
+
+    m = maximum_expense
+    n = len(elements)
+    elements_selection = []
+
+    while m >= 0 and n >= 0:
+        e = elements[n - 1]
+        if matrice[n][m] == matrice[n - 1][m - e[1]] + e[3]:
+            elements_selection.append(e)
+            m -= e[1]
+
+        n -= 1
+
+    return "\nTotal return : {} $; \nTotal cost : {} $;\nList of actions taken : {}.".format(
+        round(matrice[-1][-1], 2),
+        sum([i[1] for i in elements_selection]),
+        elements_selection,
+    )
 
 
 def main():
     two_years_profit()
     create_tuple()
-    print("Best solution : ", brute_force(500, list_of_tuples))
+    print("Best solution : ", optimized_dynamic(500, list_of_tuples))
 
 
 if __name__ == "__main__":

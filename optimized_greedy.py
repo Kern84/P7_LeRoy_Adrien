@@ -1,33 +1,68 @@
-import csv
 import time
 
 start = time.process_time()
 
-action = []
-cost = []
+action = [
+    "action-1",
+    "action-2",
+    "action-3",
+    "action-4",
+    "action-5",
+    "action-6",
+    "action-7",
+    "action-8",
+    "action-9",
+    "action-10",
+    "action-11",
+    "action-12",
+    "action-13",
+    "action-14",
+    "action-15",
+    "action-16",
+    "action-17",
+    "action-18",
+    "action-19",
+    "action-20",
+]
+
+cost = [
+    20,
+    30,
+    50,
+    70,
+    60,
+    80,
+    22,
+    26,
+    48,
+    34,
+    42,
+    110,
+    38,
+    14,
+    18,
+    8,
+    4,
+    10,
+    24,
+    114,
+]
+
+list_profit = [5, 10, 15, 20, 17, 25, 7, 11, 13, 27, 17, 9, 23, 1, 3, 8, 12, 14, 21, 18]
+
 value = []
 
 maximum_expense = 500
 
 
-"""
-Retrieves information from .csv file and sorts them in lists.
-Ignore actions price and two years profit if <= 0 $.
-"""
-with open("data/dataset1_Python+P7.csv", "r", newline="") as csvfile:
-    actions_info = csv.reader(csvfile)
-    next(actions_info)
-    for row in actions_info:
-        profit = float(row[1]) * float(row[2]) / 100
-        if float(row[1]) <= 0 or profit <= 0:
-            pass
-        else:
-            action.append(row[0])
-            cost.append(float(row[1]))
-            value.append(round(profit, 2))
+def two_years_profit():
+    """Calculate the return after two years in dollars for each actions."""
+    for i in range(len(action)):
+        profit = cost[i] * list_profit[i] / 100
+        value.append(profit)
 
 
-class Glouton:
+class Greedy:
     """
     Define the shares cost, profit and the index.
     The greedy approach consists in building a complete solution by a succession of local choices
@@ -42,7 +77,7 @@ class Glouton:
         self.ratio = profit // cost
 
     """
-    Function for the comparison between two "Glouton".
+    Function for the comparison between two "Greedy".
     We compare the calculatred ratio to sort them.
     """
 
@@ -61,10 +96,10 @@ def get_best_value(action, cost, value, maximum_expense):
     sorting_table = []
     list_of_actions_taken = []
     for i in range(len(cost)):
-        if float(cost[i]) <= 0 or float(value[i]) <= 0:
+        if cost[i] <= 0 or value[i] <= 0:
             pass
         else:
-            sorting_table.append(Glouton(action[i], float(cost[i]), float(value[i]), i))
+            sorting_table.append(Greedy(action[i], cost[i], value[i], i))
 
     sorting_table.sort(reverse=True)
 
@@ -72,8 +107,8 @@ def get_best_value(action, cost, value, maximum_expense):
     value_counter = 0
     for objet in sorting_table:
         current_name = objet.name
-        current_cost = float(objet.cost)
-        current_value = float(objet.profit)
+        current_cost = objet.cost
+        current_value = objet.profit
         if maximum_expense - current_cost >= 0:
             maximum_expense -= current_cost
             value_counter += current_value
@@ -85,9 +120,14 @@ def get_best_value(action, cost, value, maximum_expense):
     )
 
 
-print()
-print("Best solution : ", get_best_value(action, cost, value, maximum_expense))
+def main():
+    two_years_profit()
+    print()
+    print("Best solution : ", get_best_value(action, cost, value, maximum_expense))
 
+
+if __name__ == "__main__":
+    main()
 
 end = time.process_time()
 print()

@@ -13,9 +13,34 @@ List of actions taken:
 
 Program executed in :  0.843238 Seconds
 
+Optimized Dynamic:
+The optimized_dynamic.py file shows a dynamic optimized code. It determine the best return over two years for a maximum spend of $ 500. It use the same 20 elements list than the brute force code.
+
+Best solution :  
+Total return : 99.08 $; 
+Total cost of actions : 498 $;
+List of actions taken : 
+('name of the action', price, return in %, return in $)
+('action-20', 114, 18, 20.52), ('action-19', 24, 21, 5.04), ('action-18', 10, 14, 1.4), ('action-13', 38, 23, 8.74), ('action-11', 42, 17, 7.14), ('action-10', 34, 27, 9.18), ('action-8', 26, 11, 2.86), ('action-6', 80, 25, 20.0), ('action-5', 60, 17, 10.2), ('action-4', 70, 20, 14.0).
+
+Program executed in :  0.004809000000000001 Seconds
+
+
+Optimized Greedy:
+The optimized_greedy.py file shows a greedy optimized code. It determine the best return over two years for a maximum spend of $ 500. It use the same 20 elements list than the brute force code.
+
+Best solution :  
+Total return : 83.28 $; 
+Total cost of actions: 500 $;
+List of actions taken : 
+('name of the action', price, return in $)
+('action-1', 20, 1.0), ('action-2', 30, 3.0), ('action-3', 50, 7.5), ('action-4', 70, 14.0), ('action-5', 60, 10.2), ('action-6', 80, 20.0), ('action-7', 22, 1.54), ('action-8', 26, 2.86), ('action-9', 48, 6.24), ('action-10', 34, 9.18), ('action-11', 42, 7.14), ('action-14', 14, 0.14), ('action-17', 4, 0.48).
+
+Program executed in :  0.00012699999999999864 Seconds
+
 
 Optimized Dynamique:
-The optimized_dynamique.py file shows an dynamic optimized code. It read a file (~1000 elements) with actions information and determine the best combinations for the best return over two years for a maximum spend of $ 500.
+The optimized_dynamic_csv.py file shows an dynamic optimized code. It read a file (~1000 elements) with actions information and determine the best combinations for the best return over two years for a maximum spend of $ 500.
 
 Best solution for dataset 1:  
 Total return : 198.54 $; 
@@ -36,8 +61,8 @@ List of actions taken :
 Program executed in :  7.143435 Seconds
 
 
-Optimized Glouton:
-The optimized_glouton.py file shows an optimized greedy code. It read a file (~1000 elements) with actions information and determine the best combinations for the best return over two years for a maximum spend of $ 500.
+Optimized Greedy:
+The optimized_greedy_csv.py file shows an optimized greedy code. It read a file (~1000 elements) with actions information and determine the best combinations for the best return over two years for a maximum spend of $ 500.
 
 Best solution for dataset 1:  
 Total return : 101.86 $; 
